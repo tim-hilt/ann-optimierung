@@ -60,37 +60,122 @@
 \end{frame}
 
 \begin{frame}{Architektur eines Neuronalen Netzwerks}
-  \def\layersep{2.5cm}
+  \def\layersep{3.5cm}
   \begin{center}
-    \begin{tikzpicture}[->, >=stealth]
-      \tikzstyle{every pin edge}=[<-,shorten <=1pt]
-      \tikzstyle{neuron}=[circle,draw,minimum size=17pt,inner sep=0pt]
-      
-      % Draw the input layer nodes
-      \foreach \y in {1,...,3}
-      \node[neuron, pin=left:] (I-\y) at (0,-\y) {};
+    \alt<2>{
+      \begin{tikzpicture}[->, >=stealth, node distance=\layersep]
+        \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+        \tikzstyle{neuron}=[circle,draw,minimum size=17pt,inner sep=0pt]
+        
+        % Draw the input layer nodes
+        \foreach \y in {1,...,3}
+        \node[neuron, pin=left:\(x_{\y}\)] (I-\y) at (0,-\y) {};
 
-      % Draw the nodes for the second hidden layer
-      \foreach \y in {1,...,5}
-      \path[yshift=(5cm - 3cm)/2] node[neuron] (H1-\y) at (\layersep,-\y cm) {};
+        % Draw the nodes for the second hidden layer
+        \foreach \y in {1,...,5}
+        \path[yshift=(5cm - 3cm)/2] node[neuron] (H1-\y) at (\layersep,-\y cm) {};
 
-      % Draw the output layer nodes
-      \foreach \y in {1,...,2}
-      \path[yshift=(2cm - 3cm)/2] node[neuron,pin={[pin edge={->}]right:}] (O-\y) at (2*\layersep,-\y cm) {};
+        % Draw the output layer nodes
+        \foreach \y in {1,...,2}
+        \path[yshift=(2cm - 3cm)/2] node[neuron,pin={[pin edge={->}]right:\(y_{\y}\)}] (O-\y) at (2*\layersep,-\y cm) {};
 
-      \foreach \source in {1,...,3}
-      \foreach \dest in {1,...,5}
-      \path (I-\source) edge (H1-\dest);
+        \foreach \source in {1,...,3}
+        \foreach \dest in {1,...,5}
+        \path (I-\source) edge (H1-\dest);
 
-      \foreach \source in {1,...,5}
-      \foreach \dest in {1,...,2}
-      \path (H1-\source) edge (O-\dest);
-    \end{tikzpicture}
-  \end{center}
+        \foreach \source in {1,...,5}
+        \foreach \dest in {1,...,2}
+        \path (H1-\source) edge (O-\dest);
 
-\end{frame}
+        \node[above of=H1-1, node distance=1cm] (hidden) {Hidden Layer};
+        \node[right of=hidden] (output) {Output Layer};
+        \node[left of=hidden] (input) {Input Layer};
+      }{
+        \begin{tikzpicture}[->, >=stealth]
+          \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+          \tikzstyle{neuron}=[circle,draw,minimum size=17pt,inner sep=0pt]
+          
+          % Draw the input layer nodes
+          \foreach \y in {1,...,3}
+          \node[neuron, pin=left:] (I-\y) at (0,-\y) {};
 
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "../präsentation"
-%%% End:
+          % Draw the nodes for the second hidden layer
+          \foreach \y in {1,...,5}
+          \path[yshift=(5cm - 3cm)/2] node[neuron] (H1-\y) at (\layersep,-\y cm) {};
+
+          % Draw the output layer nodes
+          \foreach \y in {1,...,2}
+          \path[yshift=(2cm - 3cm)/2] node[neuron,pin={[pin edge={->}]right:}] (O-\y) at (2*\layersep,-\y cm) {};
+
+          \foreach \source in {1,...,3}
+          \foreach \dest in {1,...,5}
+          \path (I-\source) edge (H1-\dest);
+
+          \foreach \source in {1,...,5}
+          \foreach \dest in {1,...,2}
+          \path (H1-\source) edge (O-\dest);
+        }
+      \end{tikzpicture}
+    \end{center}
+  \end{frame}
+
+  \begin{frame}{Deep Neural Network}
+    \begin{center}
+      \dnn{5, 6, 5, 7, 3}
+    \end{center}
+  \end{frame}
+
+  \begin{frame}{Target-Architektur zur Klassifikation von MNIST}
+    \def\layersep{2.5cm}
+    \begin{center}
+      \begin{tikzpicture}[->, >=stealth, node distance=\layersep]
+        \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+        \tikzstyle{neuron}=[circle,draw,minimum size=17pt,inner sep=0pt]
+        
+        \node[neuron, pin=left:\(x_{1}\)] (I-1) at (0,-1) {}; \node[neuron,
+        pin=left:\(x_{2}\)] (I-2) at (0,-2) {}; \node[neuron,
+        pin=left:\(x_{3}\)] (I-3) at (0,-3) {}; \node at (0, -4) {\(\vdots\)};
+        \node[neuron, pin=left:\(x_{784}\)] (I-4) at (0,-5) {};
+
+        \path[yshift=(6cm - 5cm)/2] node[neuron] (H1-1) at (\layersep,-1 cm) {};
+        \path[yshift=(6cm - 5cm)/2] node[neuron] (H1-2) at (\layersep,-2 cm) {};
+        \path[yshift=(6cm - 5cm)/2] node[neuron] (H1-3) at (\layersep,-3 cm) {};
+        \path[yshift=(6cm - 5cm)/2] node[neuron] (H1-4) at (\layersep,-4 cm) {};
+        \path[yshift=(6cm - 5cm)/2] node at (\layersep, -4.7cm) {$\vdots$};
+        \path[yshift=(6cm - 5cm)/2] node[neuron] (H1-5) at (\layersep,-6 cm) {};
+
+        \path node[neuron] (H2-1) at (2*\layersep,-1 cm) {}; \path node[neuron]
+        (H2-2) at (2*\layersep,-2 cm) {}; \path node[neuron] (H2-3) at
+        (2*\layersep,-3 cm) {}; \path node at (2*\layersep, -3.7cm) {$\vdots$};
+        \path node[neuron] (H2-4) at (2*\layersep,-5 cm) {};
+
+        \path[yshift=(2cm - 3cm)/2] node[neuron,pin={[pin
+          edge={->}]right:\(y_{1}\)}] (O-1) at (3*\layersep,-1 cm) {};
+        \path[yshift=(2cm - 3cm)/2] node[neuron,pin={[pin
+          edge={->}]right:\(y_{2}\)}] (O-2) at (3*\layersep,-2 cm) {};
+        \path[yshift=(2cm - 3cm)/2] node at (3*\layersep, -3cm) {$\vdots$};
+        \path[yshift=(2cm - 3cm)/2] node[neuron,pin={[pin
+          edge={->}]right:\(y_{10}\)}] (O-3) at (3*\layersep,-4 cm) {};
+
+        \foreach \source in {1,...,4} \foreach \dest in {1,...,5} \path
+        (I-\source) edge (H1-\dest);
+
+        \foreach \source in {1,...,5} \foreach \dest in {1,...,4} \path
+        (H1-\source) edge (H2-\dest);
+
+        \foreach \source in {1,...,4} \foreach \dest in {1,...,3} \path
+        (H2-\source) edge (O-\dest);
+
+        \foreach \y [count=\i] in {1,2,3,4,30} \node[node distance=14pt, above
+        of=H1-\i] {\tiny\(H^1_{\y}\)};
+
+        \foreach \y [count=\i] in {1,2,3,15} \node[node distance=14pt, above
+        of=H2-\i] {\tiny\(H^2_{\y}\)};
+      \end{tikzpicture}
+    \end{center}
+  \end{frame}
+
+  %%% Local Variables:
+  %%% mode: latex
+  %%% TeX-master: "../präsentation"
+  %%% End:

@@ -1,0 +1,65 @@
+\newcommand{\dnn}[1]{
+  \def\layersep{2.5cm}
+  \def\list{#1}
+  \begin{tikzpicture}[->, >=stealth, node distance=\layersep]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,draw,minimum size=17pt,inner sep=0pt]
+    \pgfmathsetmacro{\numl}{dim({\list})}
+    \pgfmathsetmacro{\numh}{\numl-1}
+    \pgfmathsetmacro{\numi}{{\list}[0]}
+    \pgfmathsetmacro{\numo}{{\list}[\numl-1]}
+
+    % Draw the input layer
+    \foreach \y in {1,...,\numi}
+    \node[neuron, pin=left:\(x_{\y}\)] (I-\y) at (0,-\y) {};
+
+    % Draw the hidden layers
+    \foreach \y [count=\i, evaluate=\i as \break using \i + 2] in \list {
+      \pgfmathsetmacro{\counti}{{\list}[\i]}
+      \foreach \x in {1,...,\counti} {
+        \path[yshift=(\counti cm - \numi cm)/2] node[neuron] (H\i-\x) at (\i * \layersep, -\x cm) {};
+      }
+      \ifnum \numl=\break
+      \breakforeach
+      \fi
+    }
+
+    % Draw the output layer nodes
+    \foreach \y in {1,...,\numo}
+    \path[yshift=(\numo cm - \numi cm)/2] node[neuron,pin={[pin edge={->}]right:\(y_{\y}\)}] (O-\y)  at (\numh * \layersep, -\y cm) {};
+
+    % Connect Input layer and first hidden layer
+    \pgfmathsetmacro{\lhonenum}{{\list}[1]}
+    \foreach \source in {1,...,\numi}
+    \foreach \dest in {1,...,\lhonenum}
+    \path (I-\source) edge (H1-\dest);
+
+    \foreach \y [count=\i, evaluate=\i as \break using \i + 3] in \list {
+      \pgfmathsetmacro{\curr}{int({\list}[\i])}
+      \pgfmathsetmacro{\next}{int({\list}[\i+1])}
+      \pgfmathsetmacro{\j}{int(\i+1)}
+      \foreach \source in {1,...,\curr}
+      \foreach \dest in {1,...,\next}
+      \path (H\i-\source) edge (H\j-\dest);
+      \ifnum \numl=\break
+      \breakforeach
+      \fi
+    }
+
+    % Connect last hidden layer with output layer
+    \pgfmathsetmacro{\lmone}{{\list}[\numl-2]}
+    \pgfmathsetmacro{\lmonenum}{int(dim({\list})-2)}
+    \foreach \source in {1,...,\lmone}
+    \foreach \dest in {1,...,\numo}
+    \path (H\lmonenum-\source) edge (O-\dest);
+    \node[node distance=1.9cm, above of=H2-1] (hidden) {Hidden Layers};
+    \node[node distance=2*\layersep, left of=hidden] {Input Layer};
+    \node[node distance=2*\layersep, right of=hidden] {Output Layer};
+    \draw[-, decorate, decoration=brace, thick] (2.1cm, .5cm) -- (7.8cm, .5cm);
+  \end{tikzpicture}
+}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../präsentation"
+%%% End:
