@@ -1,7 +1,7 @@
 \documentclass[aspectratio=169, 10pt]{beamer}
 
 \usetheme{metropolis}
-\usetikzlibrary{shapes, snakes}
+\usetikzlibrary{shapes, snakes, spy}
 
 \setbeamercolor{background canvas}{bg=white}
 
@@ -16,9 +16,12 @@
 \usepackage[ngerman]{babel}
 \usepackage[style=iso-numeric]{biblatex}
 \usepackage{csquotes}
-\usepackage{mathtools, graphicx, booktabs, pgfplots}
+\usepackage{mathtools, graphicx, booktabs, pgfplots, xcolor}
 \usepackage[font=footnotesize]{caption}
 \usepackage{hyperref}
+
+\definecolor{myblue}{HTML}{6699cc}
+\definecolor{myorange}{HTML}{eb801a}
 
 \addbibresource{bibliography.bib}
 \graphicspath{{./Grafiken/}}
@@ -42,9 +45,9 @@
   \tableofcontents
 \end{frame}
 
-% \input{tex/supervisedlearning}
+\input{tex/supervisedlearning}
 \input{tex/neuralnetworks}
-% \input{tex/training}
+\input{tex/training}
 
 \begin{frame}[standout]
   Fragen?
