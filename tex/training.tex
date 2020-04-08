@@ -4,12 +4,41 @@
 \subsection{Loss-Funktion}%
 \label{sec:loss}
 
+\begin{frame}{Loss-Funktion/ Cost-Funktion}
+  \begin{itemize}
+  \item Dient zur Berechnung des Fehlers während dem Training
+  \item Trainingsfehler soll minimiert werden
+  \item \(\Rightarrow\) wir suchen den Punkt, an dem die Ableitung der
+    Loss-Funktion \(0\) wird, der Fehler also nicht mehr abnimmt
+  \item Es gibt eine Vielzahl an Loss- oder Cost-Funktionen, wir betrachten hier
+    die \enquote{\textbf{Quadratic Cost/ Mean Squared Error (MSE)}}:
+  \end{itemize}
 
+  \vspace{.6cm}
+
+  \begin{minipage}{.4\linewidth}
+    \[C(w, b) = \frac{1}{2n} \sum_x ||y(x) - a||^2\]
+  \end{minipage}\hfill%
+  \begin{minipage}{.55\linewidth}
+    \uncover<2->{
+      \begin{tabular}{ll}
+        \toprule
+        \(C(w, b)\) & Cost in Abhängigkeit von \(w\) und \(b\)\\
+        \(n\) & Anzahl der Trainingsinstanzen\\
+        \(y(x)\) & Label wenn \(x\) Input ist\\
+        \(a\) & Output des Netzwerkes, bei \(w\) und \(b\)\\
+        \bottomrule
+      \end{tabular}
+    }
+  \end{minipage}
+\end{frame}
 
 \subsection{Gradient Descent}%
 \label{sec:graddesc}
 
-
+\begin{frame}{Gradient Descent}
+  
+\end{frame}
 
 \subsection{Backpropagation}%
 \label{sec:backprop}
