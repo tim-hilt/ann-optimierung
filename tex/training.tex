@@ -44,49 +44,44 @@
 \label{sec:backprop}
 
 \begin{frame}{Backpropagation}
-  Es werden vier Gleichungen benötigt:
-
-  Error im Output-Layer:
-
-  Error einzelner Neuronen:
-
-  \[\delta_j^L = \frac{\partial C}{\partial a_j^L} \sigma' \left(z_j^L\right)\]
-
-  Vektorisiert:
-
-  \[\delta^L = \nabla_aC \odot \sigma'(z^L)\]
-
-  Aufgelöst, wenn MSE benutzt:
-
-  \[\delta^L = (a^L - y) \odot \sigma'(z^L)\]
-\end{frame}
-
-\begin{frame}{Backpropagation}
-  Error im Layer \(l\) hinsichtlich Error im nächsten Layer \(\delta^{l+1}\)
-
-  \[\delta^l = \left(\left(w^{l+1}\right)^T\delta^{l+1}\right) \odot
-    \sigma'\left(z^l\right)\]
-
   \begin{itemize}
-  \item Rekursive Definition durch Verwendung von \(\delta^l\) in Abhängigkeit
-    von \(\delta^{l+1}\)
-  \item Wenn anfangs \(\delta^L\) in die Gleichung gegeben wird kann der Error
-    rekursiv für jeden vorhergehenden Layer berechnet werden
+  \item Idee: Divide and conquer; Problem in kleinere, handhabbare Probleme zerlegen
   \end{itemize}
+
+  \begin{align*}
+    f(a, b, c, d) &= {({(a + b)} \cdot (c + d))}^{2}\\
+    \uncover<2->{g(a, b) &= a + b\\}
+    \uncover<3->{h(c, d) &= c + d\\}
+    \uncover<4->{i(g, h) &= g \cdot h\\}
+    \uncover<5->{f(i) &= i^{2}}
+  \end{align*}
 \end{frame}
 
 \begin{frame}{Backpropagation}
   \begin{align*}
-    \delta^L &= \nabla_aC \odot \sigma' \left(z^L\right)\\[1em]
-    \delta^l &= \left(\left(w^{l+1}\right)^T \delta^{l+1}\right) \odot
-               \sigma'\left(z^l\right)\\[1em]
-    \frac{\partial C}{\partial b^l_j} &= \delta^l_j\\[1em]
-    \frac{\partial C}{\partial w^l_{jk}} &= a^{l-1}_k\delta^l_j
+    f(a, b, c, d) &= {({(a + b)} \cdot (c + d))}^{2}\\
+    g(a, b) &= a + b\\
+    h(c, d) &= c + d\\
+    i(g, h) &= g \cdot h\\
+    f(i) &= i^{2}
   \end{align*}
+
+  % \begin{tikzpicture}
+    
+  % \end{tikzpicture}
 \end{frame}
 
-\begin{frame}{Beispiel}
+\subsection{Umsetzung in Keras}
+
+\begin{frame}{Zuvor beschriebene Architektur}
   Pass
+\end{frame}
+
+\begin{frame}{Optimierte Architektur}
+  \begin{itemize}
+  \item Vorteil: Schnellere Konvergenz
+  \item Verwendung von optimierter Cost-, Activation- und Gradient-Descent-Funktion
+  \end{itemize}
 \end{frame}
 
 %%% Local Variables:
