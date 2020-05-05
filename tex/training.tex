@@ -63,7 +63,7 @@
       Wie finde ich die Änderungsraten \(\frac{\partial C}{\partial w}; \frac{\partial C}{\partial b}\), die ich für Gradient Descent benötige?
     \end{alertblock}
 
-\uncover<2->{\(\Rightarrow\) Idee: Divide and conquer; Problem in kleinere, handhabbare Probleme zerlegen}
+\uncover<2->{\(\Rightarrow\) \textbf{Idee:} Divide and conquer; Problem in kleinere, handhabbare Probleme zerlegen}
 
   \begin{align*}
     \uncover<3->{f(a, b, c, d) &= {({(a + b)} \cdot (c + d))}^{2}\\}
@@ -94,7 +94,7 @@
         \node[draw] (g) at (2, 6) {\(+\)};
         \node[draw] (h) at (2, 2) {\(+\)};
         \node[draw] (i) at (4, 4) {\(\cdot\)};
-        \node[draw] (j) at (6, 4) {\(()^{2}\)};
+        \node[draw] (j) at (6, 4) {\(i^{2}\)};
         \draw (a) -- (g);
         \draw (b) -- (g);
         \draw (c) -- (h);
@@ -102,7 +102,7 @@
         \draw (g) -- (i) node[midway, above] {\(g\)};
         \draw (h) -- (i) node[midway, above] {\(h\)};
         \draw (i) -- (j) node[midway, above] {\(i\)};
-        \draw (j) -- (7, 4) node[midway, above] {\(f(i)\)};
+        \draw (j) -- (7, 4) node[midway, above] {\(f\)};
       \end{tikzpicture}
     \end{column}
   \end{columns}
@@ -121,15 +121,19 @@
       \node[draw] (g) at (4, 5) {\(+\)};
       \node[draw] (h) at (4, 2) {\(+\)};
       \node[draw] (i) at (6, 3.5) {\(\cdot\)};
-      \node[draw] (j) at (9, 3.5) {\(()^{2}\)};
-      \draw (a) -- (g) node[midway,above]{\(\frac{\partial g}{\partial a}\)};
+      \node[draw] (j) at (9, 3.5) {\(i^{2}\)};
+      \only<-2>{\draw (a) -- (g);}
+      \only<3->{\draw (a) -- (g) node[midway,above]{\(\frac{\partial g}{\partial a}\)};}
       \draw (b) -- (g);
       \draw (c) -- (h);
       \draw (d) -- (h);
-      \draw (g) -- (i) node[midway, above] {\(g\)} node[midway, below] {\(\frac{\partial gh}{\partial g}\)};
+      \only<-2>{\draw (g) -- (i) node[midway, above] {\(g\)};}
+      \only<3->{\draw (g) -- (i) node[midway, above] {\(g\)} node[midway, below] {\(\frac{\partial gh}{\partial g}\)};}
       \draw (h) -- (i);
-      \draw (i) -- (j) node[midway, above] {\(i\)} node[midway, below]{\(\frac{\partial i}{\partial gh}\)};
-      \draw (j) -- (11, 3.5) node[midway, above] {\(f(i)\)} node[midway, below]{\(\frac{\partial f}{\partial i}\)};
+      \only<-2>{\draw (i) -- (j) node[midway, above] {\(i\)};}
+      \only<3->{\draw (i) -- (j) node[midway, above] {\(i\)} node[midway, below]{\(\frac{\partial i}{\partial gh}\)};}
+      \only<-2>{\draw (j) -- (11, 3.5) node[midway, above] {\(f\)};}
+      \only<3->{\draw (j) -- (11, 3.5) node[midway, above] {\(f\)} node[midway, below]{\(\frac{\partial f}{\partial i}\)};}
     \end{tikzpicture}
   \end{center}
 
@@ -138,6 +142,41 @@
   \begin{alertblock}{Frage: \(\frac{\partial f}{\partial a}\)?}
     \uncover<2->{\[\frac{\partial f}{\partial a} = \frac{\partial f}{\partial i} \cdot \frac{\partial i}{\partial gh} \cdot \frac{\partial gh}{\partial g} \cdot \frac{\partial g}{\partial a}\]}
   \end{alertblock}
+\end{frame}
+
+\begin{frame}{Beispiel}
+  \begin{center}
+    \begin{tikzpicture}[every node/.style={circle, minimum width=.8cm}]
+      \node (a) at (0, 6) {\(1\)};
+      \node (b) at (0, 4) {\(2\)};
+      \node (c) at (0, 3) {\(3\)};
+      \node (d) at (0, 1) {\(4\)};
+      \node[draw] (g) at (4, 5) {\(+\)};
+      \node[draw] (h) at (4, 2) {\(+\)};
+      \node[draw] (i) at (6, 3.5) {\(\cdot\)};
+      \node[draw] (j) at (9, 3.5) {\(i^{2}\)};
+      \only<-8>{\draw (a) -- (g);}
+      \draw (b) -- (g);
+      \draw (c) -- (h);
+      \draw (d) -- (h);
+
+      \only<1>{\draw (g) -- (i);}
+      \only<2-7>{\draw (g) -- (i) node[midway, above] {\(3\)};}
+      \only<-2>{\draw (h) -- (i);}
+      \uncover<3->{\draw (h) -- (i) node[midway, above] {\(7\)};}
+      \only<-3>{\draw (i) -- (j);}
+      \only<4-7>{\draw (i) -- (j) node[midway, above] {\(21\)};}
+      \only<-4>{\draw (j) -- (11, 3.5);}
+      \only<5>{\draw (j) -- (11, 3.5) node[midway, above] {\(441\)};}
+      \uncover<6->{\draw (j) -- (11, 3.5) node[midway, above] {\(441\)} node[midway, below]{\(\frac{\partial f}{\partial i}\)};}
+      \uncover<7->{\draw (i) -- (j) node[midway, above] {\(21\)} node[midway, below]{\(\frac{\partial i}{\partial gh}\)};}
+      \uncover<8->{\draw (g) -- (i) node[midway, above] {\(3\)} node[midway, below] {\(\frac{\partial gh}{\partial g}\)};}
+      \only<9->{\draw (a) -- (g) node[midway,above]{\(\frac{\partial g}{\partial a}\)};}
+    \end{tikzpicture}
+
+    \uncover<10->{\[\frac{\partial f}{\partial i} = 2 \cdot 21 = 42; \quad \frac{\partial i}{\partial gh} = 1; \quad \frac{\partial gh}{g} = h = 7; \quad \frac{\partial g}{\partial a} = 1 \quad \Rightarrow 7 \cdot 42 = 294\]}
+
+  \end{center}
 \end{frame}
 
 \subsection{Umsetzung in Keras}
