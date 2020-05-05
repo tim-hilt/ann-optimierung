@@ -4,29 +4,29 @@
 \subsection{Loss-Funktion}%
 \label{sec:loss}
 
-\begin{frame}{Loss-Funktion/ Cost-Funktion}
+\begin{frame}{Loss-Funktion}
   \begin{itemize}
   \item Dient zur Berechnung des Fehlers während dem Training
   \item Trainingsfehler soll minimiert werden
   \item \(\Rightarrow\) wir suchen den Punkt, an dem die Ableitung der
     Loss-Funktion \(0\) wird, der Fehler also nicht mehr abnimmt
-  \item Es gibt eine Vielzahl an Loss- oder Cost-Funktionen, wir betrachten hier
-    die \enquote{\textbf{Quadratic Cost/ Mean Squared Error (MSE)}}:
+  \item Es gibt eine Vielzahl an Loss-Funktionen, wir betrachten hier
+    die \enquote{\textbf{Mean Squared Error (MSE)}}:
   \end{itemize}
 
   \vspace{.6cm}
 
   \begin{minipage}{.4\linewidth}
-    \[C(w, b) = \frac{1}{2n} \sum_x ||y(x) - a||^2\]
+    \[C(w, b) = \frac{1}{2m} \sum_{x=1}^{m} (y(x) - \hat{y}(x))^2\]
   \end{minipage}\hfill%
   \begin{minipage}{.55\linewidth}
     \uncover<2->{
       \begin{tabular}{ll}
         \toprule
         \(C(w, b)\) & Cost in Abhängigkeit von \(w\) und \(b\)\\
-        \(n\) & Anzahl der Trainingsinstanzen\\
-        \(y(x)\) & Label wenn \(x\) Input ist\\
-        \(a\) & Output des Netzwerkes, bei \(w\) und \(b\)\\
+        \(m\) & Anzahl der Trainingsinstanzen\\
+        \(y(x)\) & Gewünschter Output wenn \(x\) Input ist\\
+        \(\hat{y}(x)\) & Tatsächlicher Output des Netzwerkes\\
         \bottomrule
       \end{tabular}
     }
@@ -37,38 +37,107 @@
 \label{sec:graddesc}
 
 \begin{frame}{Gradient Descent}
-  
+  \begin{itemize}
+  \item Methode um die Weights \(w\) und Biases \(b\) zu optimieren
+  \item Vorgehen: \pause
+    \begin{enumerate}
+    \item Finde die Änderungsrate des Fehlers in Abhängigkeit von den Weights und Biases (\(\partial C / \partial w; \partial C / \partial b\))\pause
+    \item Multipliziere die Änderungsrate mit der Lernrate \(\eta\)\pause
+    \item Ziehe das Produkt aus Änderungsrate und Lernrate von den aktuellen Parametern ab\pause
+    \item Aktualisiere die alten Parameter durch das Ergebnis des letzten Schrittes
+    \end{enumerate}
+  \end{itemize}
+
+  \begin{align*}
+    w_{k+1} &= w_{k} - \eta \frac{\partial C}{\partial w_{k}}\\[1em]
+    b_{k+1} &= b_{k} - \eta \frac{\partial C}{\partial b_{k}}\\
+  \end{align*}
+
 \end{frame}
 
 \subsection{Backpropagation}%
 \label{sec:backprop}
 
 \begin{frame}{Backpropagation}
-  \begin{itemize}
-  \item Idee: Divide and conquer; Problem in kleinere, handhabbare Probleme zerlegen
-  \end{itemize}
+    \begin{alertblock}{Problem}
+      Wie finde ich die Änderungsraten \(\frac{\partial C}{\partial w}; \frac{\partial C}{\partial b}\), die ich für Gradient Descent benötige?
+    \end{alertblock}
+
+\uncover<2->{\(\Rightarrow\) Idee: Divide and conquer; Problem in kleinere, handhabbare Probleme zerlegen}
 
   \begin{align*}
-    f(a, b, c, d) &= {({(a + b)} \cdot (c + d))}^{2}\\
-    \uncover<2->{g(a, b) &= a + b\\}
-    \uncover<3->{h(c, d) &= c + d\\}
-    \uncover<4->{i(g, h) &= g \cdot h\\}
-    \uncover<5->{f(i) &= i^{2}}
+    \uncover<3->{f(a, b, c, d) &= {({(a + b)} \cdot (c + d))}^{2}\\}
+    \uncover<4->{g(a, b) &= a + b\\}
+    \uncover<5->{h(c, d) &= c + d\\}
+    \uncover<6->{i(g, h) &= g \cdot h\\}
+    \uncover<7->{f(i) &= i^{2}}
   \end{align*}
 \end{frame}
 
 \begin{frame}{Backpropagation}
-  \begin{align*}
-    f(a, b, c, d) &= {({(a + b)} \cdot (c + d))}^{2}\\
-    g(a, b) &= a + b\\
-    h(c, d) &= c + d\\
-    i(g, h) &= g \cdot h\\
-    f(i) &= i^{2}
-  \end{align*}
+  \begin{columns}
+    \begin{column}{.4\textwidth}
+      \begin{align*}
+        f(a, b, c, d) &= {({(a + b)} \cdot (c + d))}^{2}\\
+        g(a, b) &= a + b\\
+        h(c, d) &= c + d\\
+        i(g, h) &= g \cdot h\\
+        f(i) &= i^{2}
+      \end{align*}
+    \end{column}
+    \begin{column}{.6\textwidth}
+      \begin{tikzpicture}[every node/.style={circle, minimum width=.8cm}]
+        \node (a) at (0, 7) {\(a\)};
+        \node (b) at (0, 5) {\(b\)};
+        \node (c) at (0, 3) {\(c\)};
+        \node (d) at (0, 1) {\(d\)};
+        \node[draw] (g) at (2, 6) {\(+\)};
+        \node[draw] (h) at (2, 2) {\(+\)};
+        \node[draw] (i) at (4, 4) {\(\cdot\)};
+        \node[draw] (j) at (6, 4) {\(()^{2}\)};
+        \draw (a) -- (g);
+        \draw (b) -- (g);
+        \draw (c) -- (h);
+        \draw (d) -- (h);
+        \draw (g) -- (i) node[midway, above] {\(g\)};
+        \draw (h) -- (i) node[midway, above] {\(h\)};
+        \draw (i) -- (j) node[midway, above] {\(i\)};
+        \draw (j) -- (7, 4) node[midway, above] {\(f(i)\)};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
 
-  % \begin{tikzpicture}
-    
-  % \end{tikzpicture}
+\begin{frame}{Backpropagation}
+
+  \vspace{-.2cm}
+
+  \begin{center}
+    \begin{tikzpicture}[every node/.style={circle, minimum width=.8cm}]
+      \node (a) at (0, 6) {\(a\)};
+      \node (b) at (0, 4) {\(b\)};
+      \node (c) at (0, 3) {\(c\)};
+      \node (d) at (0, 1) {\(d\)};
+      \node[draw] (g) at (4, 5) {\(+\)};
+      \node[draw] (h) at (4, 2) {\(+\)};
+      \node[draw] (i) at (6, 3.5) {\(\cdot\)};
+      \node[draw] (j) at (9, 3.5) {\(()^{2}\)};
+      \draw (a) -- (g) node[midway,above]{\(\frac{\partial g}{\partial a}\)};
+      \draw (b) -- (g);
+      \draw (c) -- (h);
+      \draw (d) -- (h);
+      \draw (g) -- (i) node[midway, above] {\(g\)} node[midway, below] {\(\frac{\partial gh}{\partial g}\)};
+      \draw (h) -- (i);
+      \draw (i) -- (j) node[midway, above] {\(i\)} node[midway, below]{\(\frac{\partial i}{\partial gh}\)};
+      \draw (j) -- (11, 3.5) node[midway, above] {\(f(i)\)} node[midway, below]{\(\frac{\partial f}{\partial i}\)};
+    \end{tikzpicture}
+  \end{center}
+
+  \vspace{-.4cm}
+
+  \begin{alertblock}{Frage: \(\frac{\partial f}{\partial a}\)?}
+    \uncover<2->{\[\frac{\partial f}{\partial a} = \frac{\partial f}{\partial i} \cdot \frac{\partial i}{\partial gh} \cdot \frac{\partial gh}{\partial g} \cdot \frac{\partial g}{\partial a}\]}
+  \end{alertblock}
 \end{frame}
 
 \subsection{Umsetzung in Keras}
