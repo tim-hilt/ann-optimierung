@@ -18,10 +18,47 @@
 \usepackage{csquotes}
 \usepackage{mathtools, graphicx, booktabs, pgfplots, xcolor}
 \usepackage[font=footnotesize]{caption}
+\usepackage{listings}
 \usepackage{hyperref}
 
+\definecolor{mDarkBrown}{HTML}{604c38}
+\definecolor{mDarkTeal}{HTML}{23373b}
+\definecolor{mLightBrown}{HTML}{EB811B}
+\definecolor{mLightGreen}{HTML}{14B03D}
+\definecolor{mBackground}{HTML}{FFFFFF}
 \definecolor{myblue}{HTML}{6699cc}
 \definecolor{myorange}{HTML}{eb801a}
+
+\lstset{%
+  language=Python,
+  basicstyle=\small\ttfamily,
+  keywordstyle=\color{mLightBrown}\bfseries,
+  commentstyle=\color{mLightGreen},
+  stringstyle=\color{mLightGreen},
+  backgroundcolor=\color{mBackground},
+  numbers=none,
+  numberstyle=\tiny\ttfamily,
+  stepnumber=2,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=none,
+  framerule=1pt,
+  tabsize=2,
+  rulesep=5em,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+  framexleftmargin=0em,
+  framexrightmargin=0em,
+  xleftmargin=0em,
+  xrightmargin=0em,
+  aboveskip=1em,
+  belowskip=1em,
+  morekeywords={usetheme,institute,maketitle,@metropolis@titleformat,%
+                plain,setbeamercolor,metroset,setsansfont,setmonofont},
+}
+
 
 \addbibresource{bibliography.bib}
 \graphicspath{{./Grafiken/}}
@@ -33,7 +70,7 @@
 \subtitle{Gradient Descent und Backpropagation}
 \institute{Hochschule Esslingen --- University of Applied Sciences}
 \author{Tim Hilt}
-\date{Date: tbd}
+\date{19. Mai 2020}
 
 \begin{document}
 
@@ -48,6 +85,7 @@
 \input{tex/supervisedlearning}
 \input{tex/neuralnetworks}
 \input{tex/training}
+\input{tex/keras}
 
 \begin{frame}[standout]
   Fragen?

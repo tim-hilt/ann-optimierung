@@ -1,0 +1,78 @@
+\section{Umsetzung in Keras}
+
+\begin{frame}[fragile]{Zuvor beschriebene Architektur}
+  \begin{lstlisting}
+    from tensorflow import keras
+    ...
+    model = keras.models.Sequential([
+      keras.layers.Flatten(input_shape=(28, 28)),
+      keras.layers.Dense(30, activation='sigmoid'),
+      keras.layers.Dense(15, activation='sigmoid'),
+      keras.layers.Dense(10, activation='sigmoid'),
+    ])
+
+    model.compile(loss='mse',
+                  optimizer=keras.optimizers.SGD(learning_rate=.8),
+                  metrics=['accuracy'])
+
+    history = model.fit(X_train, y_train_cat, epochs=10,
+                        validation_data=(X_valid, y_valid_cat))
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Verlauf während des Trainings}
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[mlineplot,legend style={
+          cells={anchor=east},
+          legend pos=outer north east,
+        }, ymin=0, ymax=1.1, xmin=0.8, xmax=10.2, xlabel=Epoch]
+        \addplot table [x=history, y=loss, col sep=comma] {history1.csv};
+        \addlegendentry{Loss}
+        \addplot table [x=history, y=accuracy, col sep=comma] {history1.csv};
+        \addlegendentry{Accuracy}
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Optimierte Architektur}
+  \begin{itemize}
+  \item Vorteil: Schnellere Konvergenz
+  \item Verwendung von optimierter Cost-, Activation- und Gradient-Descent-Funktion
+  \end{itemize}
+  \begin{lstlisting}
+    model = keras.models.Sequential([
+      keras.layers.Flatten(input_shape=(28, 28)),
+      keras.layers.Dense(30, activation='relu'),
+      keras.layers.Dense(15, activation='relu'),
+      keras.layers.Dense(10, activation='softmax'),
+    ])
+
+    model.compile(loss='sparse_categorical_crossentropy',
+                  optimizer='Adam',
+                  metrics=['accuracy'])
+  \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Verlauf während des Trainings}
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[mlineplot,legend style={
+          cells={anchor=east},
+          legend pos=outer north east,
+        }, ymin=0, ymax=1.1, xmin=0.8, xmax=10.2, xlabel=Epoch]
+        \addplot table [x=history, y=loss, col sep=comma] {history2.csv};
+        \addlegendentry{Loss}
+        \addplot table [x=history, y=accuracy, col sep=comma] {history2.csv};
+        \addlegendentry{Accuracy}
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../präsentation"
+%%% End:
