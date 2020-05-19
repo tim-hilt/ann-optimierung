@@ -58,19 +58,55 @@
 \subsection{Backpropagation}%
 \label{sec:backprop}
 
-\begin{frame}{Backpropagation}
+\begin{frame}{Backpropagation --- Einleitung}
+  \only<-2>{%
     \begin{alertblock}{Problem}
       Wie finde ich die Änderungsraten \(\frac{\partial C}{\partial w}; \frac{\partial C}{\partial b}\), die ich für Gradient Descent benötige?
     \end{alertblock}
+  }
 
-\uncover<2->{\(\Rightarrow\) \textbf{Idee:} Divide and conquer; Problem in kleinere, handhabbare Probleme zerlegen}
+  \uncover<2->{%
+    \textbf{Beispiel:}
+
+    Gegeben:
+    \[f(a, b, c, d) = {({(a + b)} \cdot (c + d))}^{2}\]
+    Gesucht:
+    \[\frac{\partial f}{\partial a}\]
+
+    \only<3->{%
+      \textbf{Analytische Lösung}
+
+      Umformung zu Summanden:
+      \begin{align*}
+        f &= (a + b)^{2} \cdot (c + d)^{2}\\
+        f &= (a^{2} + 2ab + b^{2}) \cdot (c + d)^{2}\\
+      \end{align*}
+      Ableitung:
+      \[\frac{\partial f}{\partial a} = (2a + 2b) \cdot (c + d)^{2}\]
+    }
+  }
+
+  
+\end{frame}
+
+\begin{frame}{Backpropagation --- Idee}
+  
+  \begin{itemize}
+  \item \textbf{Problem:}
+    \begin{itemize}
+    \item Analytische Verfahren kommen bei komplizierten Funktionen an ihre Grenzen
+    \item Sind schwer zu implementieren
+    \item Sind ineffizient
+    \end{itemize}\pause
+  \item \textbf{Idee:} Divide and conquer; Problem in kleinere, handhabbare Probleme zerlegen
+  \end{itemize}\pause
 
   \begin{align*}
     \uncover<3->{f(a, b, c, d) &= {({(a + b)} \cdot (c + d))}^{2}\\}
-    \uncover<4->{g(a, b) &= a + b\\}
-    \uncover<5->{h(c, d) &= c + d\\}
-    \uncover<6->{i(g, h) &= g \cdot h\\}
-    \uncover<7->{f(i) &= i^{2}}
+    \uncover<4->{g &= a + b\\}
+    \uncover<5->{h &= c + d\\}
+    \uncover<6->{i &= g \cdot h\\}
+    \uncover<7->{f &= i^{2}}
   \end{align*}
 \end{frame}
 
@@ -79,10 +115,10 @@
     \begin{column}{.4\textwidth}
       \begin{align*}
         f(a, b, c, d) &= {({(a + b)} \cdot (c + d))}^{2}\\
-        g(a, b) &= a + b\\
-        h(c, d) &= c + d\\
-        i(g, h) &= g \cdot h\\
-        f(i) &= i^{2}
+        g &= a + b\\
+        h &= c + d\\
+        i &= g \cdot h\\
+        f &= i^{2}
       \end{align*}
     \end{column}
     \begin{column}{.6\textwidth}
