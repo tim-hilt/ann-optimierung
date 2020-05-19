@@ -1,6 +1,9 @@
 \section{Künstliche Neuronale Netze}%
 \label{sec:ann}
 
+\subsection{Künstliches Neuron}%
+\label{sec:neuron}
+
 \begin{frame}{Künstliches Neuron}
   \begin{minipage}{.65\textwidth}
     \begin{tikzpicture}[->, >=stealth, thick, scale=.8]
@@ -56,13 +59,15 @@
       \end{tikzpicture}
     }
   \end{minipage}
-
 \end{frame}
+
+\subsection{Architektur eines Neuronalen Netzes}%
+\label{sec:nn}
 
 \begin{frame}{Architektur eines Neuronalen Netzwerks}
   \def\layersep{3.5cm}
   \begin{center}
-    \alt<2>{
+    \alt<2>{%
       \begin{tikzpicture}[->, >=stealth, node distance=\layersep]
         \tikzstyle{every pin edge}=[<-,shorten <=1pt]
         \tikzstyle{neuron}=[circle,draw,minimum size=17pt,inner sep=0pt]
