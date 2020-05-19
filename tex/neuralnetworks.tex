@@ -246,20 +246,39 @@
         \end{scope}
       }
       \uncover<3->{
-        \node at (2.5, -5) {\footnotesize\(\displaystyle \mathbf{W^1} =
+        \node at (2.5, -5) {\footnotesize\(\displaystyle \mathbf{W^2} =
           \begin{bmatrix}
-            w^1_{1,1} & w^1_{2,1} & \cdots & w^1_{30,1}\\
-            w^1_{1,2} & w^1_{2,2} & \cdots & w^1_{30,2}\\
-            \vdots & \vdots & \ddots & \vdots\\
-            w^1_{1,784} & w^1_{2,784} & \cdots & w^1_{30,784}
+            w^2_{1,1} & w^2_{2,1} & \cdots & w^2_{30,1}\\[1em]
+            w^2_{1,2} & w^2_{2,2} & \cdots & w^2_{30,2}\\[1em]
+            \vdots & \vdots & \ddots & \vdots\\[1em]
+            w^2_{1,784} & w^2_{2,784} & \cdots & w^2_{30,784}
           \end{bmatrix};~
-          \mathbf{b^1} =
+          \mathbf{b^2} =
           \begin{bmatrix}
-            b^1_1\\b^1_2\\\vdots\\b^1_{30}
+            b^2_1\\[1em]
+            b^2_2\\[1em]
+            \vdots\\[1em]
+            b^2_{30}
           \end{bmatrix}
           \)};
       }
     \end{tikzpicture}
+  \end{frame}
+
+  \begin{frame}{Output eines neuronalen Netzwerks berechnen}
+    Gegeben:
+    \begin{itemize}
+    \item Inputvektor \(\mathbf{x}\)
+    \item Gewichtsmatrizen \(\mathbf{W}^{2 \ldots 4}\)
+    \item Biasvektoren \(\mathbf{b}^{2 \ldots 4}\)
+    \end{itemize}
+
+    \begin{align*}
+      \mathbf{a^{1}} &= \mathbf{x}\\
+      \mathbf{a^{2}} &= \sigma(\mathbf{W^{2}a^{1}} + \mathbf{b^{2}})\\
+      \mathbf{a^{3}} &= \sigma(\mathbf{W^{3}a^{2}} + \mathbf{b^{3}})\\
+      \mathbf{a^{4}} &= \sigma(\mathbf{W^{4}a^{3}} + \mathbf{b^{4}}) = \mathbf{\hat{y}}
+    \end{align*}
   \end{frame}
 
   %%% Local Variables:
