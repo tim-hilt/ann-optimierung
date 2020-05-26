@@ -172,10 +172,10 @@
         (H2-\source) edge (O-\dest);
 
         \foreach \y [count=\i] in {1,2,3,4,30} \node[node distance=14pt, above
-        of=H1-\i] {\tiny\(H^1_{\y}\)};
+        of=H1-\i] {\tiny\(L^{2}_{\y}\)};
 
         \foreach \y [count=\i] in {1,2,3,15} \node[node distance=14pt, above
-        of=H2-\i] {\tiny\(H^2_{\y}\)};
+        of=H2-\i] {\tiny\(L^3_{\y}\)};
       \end{tikzpicture}
     \end{center}
   \end{frame}
@@ -228,10 +228,10 @@
         \path (H2-\source) edge (O-\dest);
 
         \foreach \y [count=\i] in {1,2,3,4,30}
-        \node[node distance=14pt, above of=H1-\i] {\tiny\(H^1_{\y}\)};
+        \node[node distance=14pt, above of=H1-\i] {\tiny\(L^{2}_{\y}\)};
 
         \foreach \y [count=\i] in {1,2,3,15}
-        \node[node distance=14pt, above of=H2-\i] {\tiny\(H^2_{\y}\)};
+        \node[node distance=14pt, above of=H2-\i] {\tiny\(L^{3}_{\y}\)};
 
         \spy[myblue] on (H1-1) in node (a) at (10, -3.5);
       \end{scope}
@@ -240,14 +240,14 @@
           \draw[-, line width=.7mm, black] (10, -1.25cm) -- (10, -2.75cm);
           \node (sum) at (9.65, -2) {\large\(\sum\)};
           \node (act) at (10.4, -2) {\(\sigma(z)\)};
-          \node (x1) at (7.8, -2.1) {\small\(x_1w^1_{1,1}\)};
-          \node (x2) at (7.6, -3) {\small\(x_2w^1_{1,2}\)};
-          \node (x3) at (7.8, -3.65) {\small\(x_3w^1_{1,3}\)};
-          \node[fill=white] (x4) at (9, -3.8) {\small\(x_{784}w^1_{1,784}\)};
-          \node (a1) at (12, -2.15) {\small\(a^1_1\)};
-          \node (a2) at (11.8, -2.8) {\small\(a^1_1\)};
-          \node (a3) at (11.6, -3.3) {\small\(a^1_1\)};
-          \node (a4) at (11.05, -3.4) {\small\(a^1_1\)};
+          \node (x1) at (7.8, -2.1) {\small\(x_1w^2_{1,1}\)};
+          \node (x2) at (7.6, -3) {\small\(x_2w^2_{1,2}\)};
+          \node (x3) at (7.8, -3.65) {\small\(x_3w^2_{1,3}\)};
+          \node[fill=white] (x4) at (9, -3.8) {\small\(x_{784}w^2_{1,784}\)};
+          \node (a1) at (12, -2.15) {\small\(a^2_1\)};
+          \node (a2) at (11.8, -2.8) {\small\(a^2_1\)};
+          \node (a3) at (11.6, -3.3) {\small\(a^2_1\)};
+          \node (a4) at (11.05, -3.4) {\small\(a^2_1\)};
         \end{scope}
       }
       \uncover<3->{

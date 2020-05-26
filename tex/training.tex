@@ -94,7 +94,7 @@
     \item Sind schwer zu implementieren
     \item Sind ineffizient
     \end{itemize}\pause
-  \item \textbf{Idee:} Divide and conquer; Problem in kleinere, handhabbare Probleme zerlegen
+  \item \textbf{Idee:} Divide and conquer; Problem in kleinere, handhabbare Probleme zerlegen \parencite{rumelhart1986learning, stanford19}
   \end{itemize}\pause
 
   \begin{align*}
@@ -171,7 +171,7 @@
 
   \vspace{-.4cm}
 
-  \begin{alertblock}{Gesucht: \(\frac{\partial f}{\partial a}\)}
+  \begin{alertblock}{Gesucht: \(\frac{\partial f}{\partial a}\) \parencite{stanford19, colah15}}
     \uncover<2->{\[\frac{\partial f}{\partial a} = \frac{\partial f}{\partial i} \cdot \frac{\partial i}{\partial gh} \cdot \frac{\partial gh}{\partial g} \cdot \frac{\partial g}{\partial a}\]}
   \end{alertblock}
 \end{frame}
@@ -209,6 +209,17 @@
     \uncover<10->{\[\frac{\partial f}{\partial i} = 2 \cdot 21 = 42; \quad \frac{\partial i}{\partial gh} = 1; \quad \frac{\partial gh}{g} = h = 7; \quad \frac{\partial g}{\partial a} = 1 \quad \Rightarrow 7 \cdot 42 = 294\]}
 
   \end{center}
+\end{frame}
+
+\begin{frame}{Überprüfung mit analytischer Lösung}
+  Gegeben:
+  \[f(a, b, c, d) = {({(a + b)} \cdot (c + d))}^{2},\quad a=1, b=2, c=3, d=4\]
+  Gesucht:
+  \[\frac{\partial f}{\partial a}\]
+  Gefunden:
+  \[\frac{\partial f}{\partial a} = (2a + 2b) \cdot (c + d)^{2}\]\pause
+  Einsetzen:
+  \[\frac{\partial f}{\partial a} = (2 \cdot 1 + 2 \cdot 2) \cdot (3 + 4)^{2} = 294\]
 \end{frame}
 
 %%% Local Variables:
